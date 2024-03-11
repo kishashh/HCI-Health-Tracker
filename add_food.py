@@ -1,7 +1,7 @@
 ###########################################################
 # Imports
 ###########################################################
-import home_screen        # Import main to move to it if back button is clicked
+import home_screen                              # Import main to move to it if back button is clicked
 import main
 import tkinter as tk                            # Library for making GUIs
 
@@ -16,6 +16,8 @@ class AddingFood(tk.Tk):                        # Adding food class for applicat
         self.title("Nutrition Tracker: Adding Food")    # Assign name to application
 
         self.geometry('1050x500')               # Defining dimensions of self
+
+        self.configure(background="gray")       # Assign gray to window background
 
         self.food_entries = []                  # Make array for food entries
 

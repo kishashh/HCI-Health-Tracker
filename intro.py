@@ -15,7 +15,10 @@ class WelcomePage(tk.Tk):                       # Main class for the application
     def __init__(self):
         super().__init__()                      # Initialize the superclass (tk.Tk)
         self.title("Welcome Page")              # Set the window title
-        self.geometry("1050x400")               # Set the window size
+
+        self.geometry("1050x500")               # Set the window size
+
+        self.configure(background="gray")       # Assign gray to window background
 
         self.create_widgets()                   # Call method to create widgets
 

@@ -1,7 +1,7 @@
 ###########################################################
 # Imports
 ###########################################################
-import add_food                 # Import add_food to move to it if add food button is clicked
+import add_food                                 # Import add_food to move to it if add food button is clicked
 import tkinter as tk                            # Library for making GUIs
 import main
 
@@ -17,10 +17,12 @@ class NutritionTracker(tk.Tk):                  # Main class for application
 
         self.title("Nutrition Tracker")         # Assign name to application
 
+        self.configure(background="gray")       # Assign gray to window background
+
         self.create_widgets()                   # Call on create_widgets def
 
     def create_widgets(self):                   # Creating widgets for application
-        home_screen_label = tk.Label(self, text="Food:", font=("Arial", 20))    # Food name section
+        home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))    # Food name section
         home_screen_label.pack(pady=(10, 20))   # Add some padding
 
         add_food_button = tk.Button(self, text="Add Food", command=self.to_adding_food)   # Button to add food
