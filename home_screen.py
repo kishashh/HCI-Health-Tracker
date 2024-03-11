@@ -42,7 +42,7 @@ class NutritionTracker(tk.Tk):                  # Main class for application
 
 
 ###########################################################
-# Main to keep application working
+# Main to initialize and run the application
 ###########################################################
 if __name__ == "__main__":
     app = NutritionTracker()

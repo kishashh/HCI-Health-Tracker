@@ -81,7 +81,7 @@ class AddingFood(tk.Tk):                        # Adding food class for applicat
 
 
 ###########################################################
-# Main to keep application working
+# Main to initialize and run the application
 ###########################################################
 if __name__ == "__main__":
     app = AddingFood()
