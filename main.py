@@ -1,8 +1,6 @@
 ###########################################################
 # Imports
 ###########################################################
-import add_food                                 # Import add_food to move to it if add food button is clicked
-import home_screen                              # Import home_screen to make screen
 import intro                                    # Import intro to pull up first
 import tkinter as tk                            # Library for making GUIs
 
