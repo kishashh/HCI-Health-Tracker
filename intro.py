@@ -4,7 +4,7 @@
 import tkinter as tk                            # Library for making GUIs
 from tkinter import ttk                         # Import ttk module for Combobox
 import main
-#from main import NutritionTracker               # Import main to move to it if continue button is clicked
+import home_screen              # Import main to move to it if continue button is clicked
 
 
 
@@ -53,10 +53,10 @@ class WelcomePage(tk.Tk):                   # Main class for the application
 
         # Add more widgets or functionality as needed
 
-    #def open_main(self):
-    #    self.destroy()  # Optionally, hide the main window
-    #    main_window = NutritionTracker()
-    #    main_window.mainloop()  # Optional: makes the second window modal
+    def open_main(self):
+        self.destroy()  # Optionally, hide the main window
+        main_window = home_screen.NutritionTracker()
+        main_window.mainloop()  # Optional: makes the second window modal
 
 
 

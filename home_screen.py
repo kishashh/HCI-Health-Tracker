@@ -1,7 +1,7 @@
 ###########################################################
 # Imports
 ###########################################################
-#from add_food import AddingFood                 # Import add_food to move to it if add food button is clicked
+import add_food                 # Import add_food to move to it if add food button is clicked
 import tkinter as tk                            # Library for making GUIs
 import main
 

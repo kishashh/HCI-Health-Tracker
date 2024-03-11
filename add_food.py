@@ -1,7 +1,7 @@
 ###########################################################
 # Imports
 ###########################################################
-#from home_screen import NutritionTracker        # Import main to move to it if back button is clicked
+import home_screen        # Import main to move to it if back button is clicked
 import main
 import tkinter as tk                            # Library for making GUIs
 
