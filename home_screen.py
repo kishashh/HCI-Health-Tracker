@@ -35,7 +35,7 @@ class NutritionTracker(tk.Tk):                  # Main class for application
         #self.clear_screen()
         #self = AddingFood.self
         self.destroy()
-        main_window = AddingFood()
+        main_window = add_food.AddingFood()
         main_window.mainloop()
 
 

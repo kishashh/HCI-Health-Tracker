@@ -75,7 +75,7 @@ class AddingFood(tk.Tk):                        # Adding food class for applicat
 
     def back_to_home(self):
         self.destroy()
-        main_window = NutritionTracker()
+        main_window = home_screen.NutritionTracker()
         main_window.mainloop()
 
 

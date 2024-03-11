@@ -11,7 +11,7 @@ import tkinter as tk                            # Library for making GUIs
 ###########################################################
 # Main Class
 ###########################################################
-class main():                                   # Main class for application
+class Controller():                                   # Main class for application
     intro.WelcomePage()
 
     # Function that clears screen to allow new variables to be used
@@ -25,5 +25,5 @@ class main():                                   # Main class for application
 # Main to keep application working
 ###########################################################
 if __name__ == "__main__":
-    app = main()
+    app = Controller()
     app.mainloop()
