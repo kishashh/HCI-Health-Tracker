@@ -11,8 +11,14 @@ import tkinter as tk                            # Library for making GUIs
 ###########################################################
 # Main Class
 ###########################################################
-class Controller():                                   # Main class for application
-    intro.WelcomePage()
+class Controller(tk.Tk):                        # Main class for application
+    def __init__(self):
+        super().__init__()                      # Call the constructor of the Tk class
+        self.destroy()                          # Destroy extra window (will throw error for now)
+        intro.WelcomePage()                     # Call on intro file to start file
+        
+    def run(self):
+        self.root.mainloop()                    # Start the main event loop
 
     # Function that clears screen to allow new variables to be used
     #def clear_screen(self):
