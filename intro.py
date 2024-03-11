@@ -3,7 +3,6 @@
 ###########################################################
 import tkinter as tk                            # Library for making GUIs
 from tkinter import ttk                         # Import ttk module for Combobox
-import main
 import home_screen                              # Import main to move to it if continue button is clicked
 
 

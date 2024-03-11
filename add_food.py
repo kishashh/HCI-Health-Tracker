@@ -2,7 +2,6 @@
 # Imports
 ###########################################################
 import home_screen                              # Import main to move to it if back button is clicked
-import main
 import tkinter as tk                            # Library for making GUIs
 
 
