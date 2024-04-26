@@ -2,6 +2,7 @@
 
 ```bash
 pip install tk
+pip install matplotlib
 ```
 Or on Linux:
 ```bash

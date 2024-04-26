@@ -3,6 +3,7 @@
 ###########################################################
 import add_food                                 # Import add_food to move to it if add food button is clicked
 import tkinter as tk                            # Library for making GUIs
+import graph_display                            #
 
 
 
@@ -46,7 +47,7 @@ class NutritionTracker(tk.Tk):                  # Main class for application
         #self.clear_screen()
         #self = AddingFood.self
         self.destroy()                          # Delete current screen
-        main_window = add_food.AddingFood()     # Starts add_food
+        main_window = graph_display.GraphDisplay()# 
         main_window.mainloop()                  # Starts loop for window
 
 
