@@ -4,15 +4,10 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-#<<<<<<< Chart-Data-Input
-#from datetime import datetime, timedelta
-#from collections import defaultdict
-#=======
+from datetime import datetime, timedelta
+from collections import defaultdict
 from tkinter import PhotoImage
 import os
-from datetime import datetime
-
-#>>>>>>> main
 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -313,7 +308,7 @@ class NutritionTracker(tk.Tk):
         filename = os.path.join(results_folder, f"{self.current_user}.txt")
 
         with open(filename, 'a') as file:
-            file.write(f"{current_date}, {calories}, {protein}, {carbs}, {fat}\n")
+            file.write(f"\n{current_date}, {calories}, {protein}, {carbs}, {fat}")
 
     def clear_entries(self):                    # Empties contents of all entries for new entries to be added
         self.food_entry.delete(0, tk.END)       # Clears food entry
