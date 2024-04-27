@@ -275,7 +275,6 @@ class NutritionTracker(tk.Tk):
         if self.current_user is None:
             messagebox.showerror("Error", "No user logged in.")
             return
-        print(self.current_user)
         current_date = datetime.now().strftime("%m/%d/%Y")
         results_folder = "Results"
         os.makedirs(results_folder, exist_ok=True)
@@ -311,7 +310,6 @@ class NutritionTracker(tk.Tk):
         barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
         barvalue = [1,2,3,4,5,6,7]
         calavg = sum(barvalue)/7
-        print (calavg)
 
         bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
         bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
