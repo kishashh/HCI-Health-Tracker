@@ -202,13 +202,9 @@ class NutritionTracker(tk.Tk):
         home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))
         home_screen_label.pack(pady=(10, 20))
 
-        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)
-        add_food_button.pack(pady=(10, 20))
         add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)    # Button to add food
         add_food_button.pack(pady=(10,20))      # Add some padding
 
-        show_progress_button = tk.Button(self, text="Show Progress", command=self.create_widgets_progress)
-        show_progress_button.pack(pady=(10, 20))
         show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress) # Button to add food
         show_progress.pack(pady=(10,20))        # Add some padding
 
