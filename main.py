@@ -323,7 +323,12 @@ class NutritionTracker(tk.Tk):
     # Making Progress Screen
     #######################################################
     def create_widgets_progress(self, user_name, calorie_goal):
+        # Clear screen for new screen contents
         self.clear_screen()
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.add_food_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
 
         # Get the current date and format it
         current_date = datetime.now()
@@ -443,7 +448,8 @@ class NutritionTracker(tk.Tk):
         piecat = ['Protien', 'Fat', 'Carbs']
         pievalue = [protein_total, fat_total, carbs_total] 
 
-        fig = Figure(figsize=(4, 4), facecolor='gray')                  # create a figure object
+
+        fig = Figure(figsize=(3.8, 3.8))                  # create a figure object
         ax = fig.add_subplot(111)                       # add an Axes to the figure
         cal_left =  int(calorie_goal) - calories_total  # calculate how many calories are left in the day
         ax.set_title(f'Calories Left: {cal_left}')      # print out calories left
