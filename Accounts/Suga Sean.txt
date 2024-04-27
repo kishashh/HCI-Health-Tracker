@@ -1,0 +1,7 @@
+name: Suga Sean
+age: 27
+weight: 135
+sex: Male
+height: 72
+activity: Hard (6-7 days)
+plan: Maintain Weight
