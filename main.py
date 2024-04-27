@@ -308,7 +308,7 @@ class NutritionTracker(tk.Tk):
         filename = os.path.join(results_folder, f"{self.current_user}.txt")
 
         with open(filename, 'a') as file:
-            file.write(f"\n{current_date}, {calories}, {protein}, {carbs}, {fat}")
+            file.write(f"{current_date}, {calories}, {protein}, {carbs}, {fat}\n")
 
     def clear_entries(self):                    # Empties contents of all entries for new entries to be added
         self.food_entry.delete(0, tk.END)       # Clears food entry
@@ -402,7 +402,7 @@ class NutritionTracker(tk.Tk):
                     calavg = sum(barvalue)/7
 
                     seven_days_ago = current_date - timedelta(days=7) 
-                    bar_fig = Figure(figsize=(4, 4), dpi=100, facecolor='gray')
+                    bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
                     bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
                     bar_ax.bar(barcat, barvalue, color='skyblue')
                     bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg)[:6])
@@ -450,6 +450,7 @@ class NutritionTracker(tk.Tk):
 
 
         fig = Figure(figsize=(3.8, 3.8))                  # create a figure object
+
         ax = fig.add_subplot(111)                       # add an Axes to the figure
         cal_left =  int(calorie_goal) - calories_total  # calculate how many calories are left in the day
         ax.set_title(f'Calories Left: {cal_left}')      # print out calories left
