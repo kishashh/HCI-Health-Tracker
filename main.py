@@ -26,7 +26,7 @@ class NutritionTracker(tk.Tk):
         # Image for intro and login background
         self.intro_login_bg_image = PhotoImage(file='intro_login_background.png')
         self.add_food_bg_image = PhotoImage(file='add_food_background.png')
-        self.configure(background="gray")
+        self.home_bg_image = PhotoImage(file='home_background.png')
         self.create_widgets_intro()
         self.food_entries = []  # Initialize the food_entries list
         self.current_user = None  # Initialize a variable to hold the username persistently
@@ -112,13 +112,13 @@ class NutritionTracker(tk.Tk):
         self.plan_combobox.set("Select a Plan")
         self.plan_combobox.place(relx=0.65, rely=0.625, anchor="center")
 
-        # Add continue button
-        continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue, font=("Arial", 14))
-        continue_button.place(relx=0.35, rely=0.85, anchor="center")
-
         # Add login button
         login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login, font=("Arial", 14))
-        login_button.place(relx=0.65, rely=0.85, anchor="center")
+        login_button.place(relx=0.35, rely=0.85, anchor="center")
+
+        # Add continue button
+        continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue, font=("Arial", 14))
+        continue_button.place(relx=0.65, rely=0.85, anchor="center")
 
     def save_data_and_continue(self):
         # Gather user data
@@ -201,7 +201,12 @@ class NutritionTracker(tk.Tk):
     # Making Home Screen
     #######################################################
     def create_widgets_home_screen(self, user_name, calorie_goal):
+        # Clear screen for new screen contents
         self.clear_screen()
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.home_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
 
         # # Ensure calorie goal is an integer if it's not already handled in the calculation
         # if isinstance(calorie_goal, float):
@@ -335,7 +340,7 @@ class NutritionTracker(tk.Tk):
         today = current_date.strftime("%A")
 
         # "{Name}'s Progress!" text at the top middle
-        welcome_label = tk.Label(self, text=f"{user_name}'s Progress!", font=("Arial", 20))
+        welcome_label = tk.Label(self, text=f"{user_name}'s Progress!", bg="white", font=("Arial", 20))
         welcome_label.pack(pady=(10, 20))           # Add some padding
 
         frameChartsLT = tk.Frame(self)              # Corrected to use self
@@ -402,7 +407,7 @@ class NutritionTracker(tk.Tk):
                     calavg = sum(barvalue)/7
 
                     seven_days_ago = current_date - timedelta(days=7) 
-                    bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
+                    bar_fig = Figure(figsize=(3.8, 3.8), dpi=100)
                     bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
                     bar_ax.bar(barcat, barvalue, color='skyblue')
                     bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg)[:6])
