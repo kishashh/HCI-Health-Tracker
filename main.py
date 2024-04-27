@@ -51,7 +51,7 @@ class NutritionTracker(tk.Tk):
         welcome_label.place(relx=0.5, rely=0.1, anchor="center")
 
         # Add label for adding name
-        name_label = tk.Label(self, text="Name:", font=("Arial", 14))
+        name_label = tk.Label(self, text="Name:", bg="white", font=("Arial", 14))
         name_label.place(relx=0.35, rely=0.25, anchor="center")
 
         # Add entry for name
@@ -59,7 +59,7 @@ class NutritionTracker(tk.Tk):
         self.name_entry.place(relx=0.35, rely=0.3125, anchor="center")
 
         # Add label for age
-        age_label = tk.Label(self, text="Age", font=("Arial", 14))
+        age_label = tk.Label(self, text="Age", bg="white", font=("Arial", 14))
         age_label.place(relx=0.35, rely=0.375, anchor="center")
 
         # Add entry for age
@@ -67,7 +67,7 @@ class NutritionTracker(tk.Tk):
         self.age_entry.place(relx=0.35, rely=0.4375, anchor="center")
 
         # Add label for weight
-        weight_label = tk.Label(self, text="Weight:", font=("Arial", 14))
+        weight_label = tk.Label(self, text="Weight:", bg="white", font=("Arial", 14))
         weight_label.place(relx=0.35, rely=0.5, anchor="center")
 
         # Add entry for weight
@@ -75,7 +75,7 @@ class NutritionTracker(tk.Tk):
         self.weight_entry.place(relx=0.35, rely=0.5625, anchor="center")
 
         # Add label for height
-        height_label = tk.Label(self, text="Height (in):", font=("Arial", 14))
+        height_label = tk.Label(self, text="Height (in):", bg="white", font=("Arial", 14))
         height_label.place(relx=0.35, rely=0.625, anchor="center")
 
         # Add entry for height
@@ -83,7 +83,7 @@ class NutritionTracker(tk.Tk):
         self.height_entry.place(relx=0.35, rely=0.6875, anchor="center")
 
         # Add label for sex with options for sex
-        sex_label = tk.Label(self, text="Sex:", font=("Arial", 14))
+        sex_label = tk.Label(self, text="Sex:", bg="white", font=("Arial", 14))
         sex_label.place(relx=0.65, rely=0.3125, anchor="center")
         gender_options = ["Male", "Female"]
 
@@ -93,7 +93,7 @@ class NutritionTracker(tk.Tk):
         self.sex_combobox.place(relx=0.65, rely=0.375, anchor="center")
 
         # Add label for activity
-        activity_label = tk.Label(self, text="Activity:", font=("Arial", 14))
+        activity_label = tk.Label(self, text="Activity:", bg="white", font=("Arial", 14))
         activity_label.place(relx=0.65, rely=0.4375, anchor="center")
 
         # Add combo box options and combo box for activity
@@ -103,7 +103,7 @@ class NutritionTracker(tk.Tk):
         self.activity_combobox.place(relx=0.65, rely=0.5, anchor="center")
 
         # Add label for plan option
-        plan_label = tk.Label(self, text="Plan:", font=("Arial", 14))
+        plan_label = tk.Label(self, text="Plan:", bg="white", font=("Arial", 14))
         plan_label.place(relx=0.65, rely=0.5625, anchor="center")
 
         # Add combo box options and combo box for selecting plan
@@ -123,7 +123,7 @@ class NutritionTracker(tk.Tk):
     def save_data_and_continue(self):
         # Gather user data
         user_name = self.name_entry.get()
-        # calorie_goal = self.calculate_calorie_goal()
+        
         # Get the current date
         current_date = datetime.now().strftime("%m/%d/%Y")
         
@@ -208,10 +208,6 @@ class NutritionTracker(tk.Tk):
         background_label = tk.Label(self, image=self.home_bg_image)
         background_label.place(relwidth=1.0, relheight=1.0)
 
-        # # Ensure calorie goal is an integer if it's not already handled in the calculation
-        # if isinstance(calorie_goal, float):
-        #     calorie_goal = int(calorie_goal)
-
         # Add sentence about calorie goal for specific day
         greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 14))
         greeting_label.place(relx=0.5, rely=0.2, anchor="center")
@@ -238,6 +234,7 @@ class NutritionTracker(tk.Tk):
     # Making Add Food Screen
     #######################################################
     def create_widgets_add_food(self, user_name, calorie_goal):          # Creating widgets for application
+        # Clear screen for new screen contents
         self.clear_screen()
 
         # Add label for adding background image
@@ -259,26 +256,33 @@ class NutritionTracker(tk.Tk):
         # Add label for carbs
         tk.Label(self, text="Carbs (g):", font=("Arial", 14), bg="white").place(relx=0.8, rely=0.2, anchor="center")
 
-        self.food_entry = tk.Entry(self)                            # Adds widget food name information to self object
-        self.food_entry.place(relx=0.2, rely=0.3, anchor="center")       # Assign input box below food label
+        # Add entry for food
+        self.food_entry = tk.Entry(self)
+        self.food_entry.place(relx=0.2, rely=0.3, anchor="center")
 
-        self.calories_entry = tk.Entry(self)                        # Adds widget calories information to self object
-        self.calories_entry.place(relx=0.35, rely=0.3, anchor="center")   # Assign input box below calories label
+        # Add entry for calories
+        self.calories_entry = tk.Entry(self)
+        self.calories_entry.place(relx=0.35, rely=0.3, anchor="center")
 
-        self.protein_entry = tk.Entry(self)                         # Adds widget protein information to self object
-        self.protein_entry.place(relx=0.5, rely=0.3, anchor="center")    # Assign input box below protein label
+        # Add entry for protein
+        self.protein_entry = tk.Entry(self)
+        self.protein_entry.place(relx=0.5, rely=0.3, anchor="center")
 
-        self.fat_entry = tk.Entry(self)                             # Adds widget fat information to self object
-        self.fat_entry.place(relx=0.65, rely=0.3, anchor="center")        # Assign input box below fat label
+        # Add entry for fat
+        self.fat_entry = tk.Entry(self)
+        self.fat_entry.place(relx=0.65, rely=0.3, anchor="center")
 
-        self.carbs_entry = tk.Entry(self)                           # Adds widget carbs information to self object
-        self.carbs_entry.place(relx=0.8, rely=0.3, anchor="center")      # Assign input box below carbs label
+        # Add entry for carbs
+        self.carbs_entry = tk.Entry(self)
+        self.carbs_entry.place(relx=0.8, rely=0.3, anchor="center")
 
-        self.add_button = tk.Button(self, text="Add Food", command=self.add_food, font=("Arial", 14))   # Button to add food
-        self.add_button.place(relx=0.5, rely=0.4, anchor="center")                # Placement of the button
+        # Add add button
+        self.add_button = tk.Button(self, text="Add Food", command=self.add_food, font=("Arial", 14))
+        self.add_button.place(relx=0.5, rely=0.4, anchor="center")
 
-        self.food_listbox = tk.Listbox(self, width=50)                              # Creation of the listbox
-        self.food_listbox.place(relx=0.5, rely=0.65, anchor="center")       # Placemtn of the listbox
+        # Add list box for food entries to display
+        self.food_listbox = tk.Listbox(self, width=50)
+        self.food_listbox.place(relx=0.5, rely=0.65, anchor="center")
 
         # Add back button
         back_button = tk.Button(self, text="Back", command=lambda: self.create_widgets_home_screen(user_name, calorie_goal), font=("Arial", 14))
@@ -288,20 +292,23 @@ class NutritionTracker(tk.Tk):
         logout_button = tk.Button(self, text="Logout", background = "red", command=self.create_widgets_intro, font=("Arial", 14))
         logout_button.place(relx=1.0, anchor="ne")
 
-    def add_food(self):                         # Def related to adding food button
-        food = self.food_entry.get()            # Calls for food name input
-        calories = self.calories_entry.get()    # Calls for calories input
-        protein = self.protein_entry.get()      # Calls for protein input
-        fat = self.fat_entry.get()              # Calls for fat input
-        carbs = self.carbs_entry.get()          # Calls for carbs input
+    def add_food(self):
+        # Get food stats info
+        food = self.food_entry.get()
+        calories = self.calories_entry.get()
+        protein = self.protein_entry.get()
+        fat = self.fat_entry.get()
+        carbs = self.carbs_entry.get()
 
-        if food and calories and protein and fat and carbs:                 # If all entries have input, append then add them to food_listbox
+        # If all entries have input, append then add them to food_listbox
+        if food and calories and protein and fat and carbs:
             self.food_entries.append((food, calories, protein, fat, carbs))
             self.food_listbox.insert(tk.END, f"{food} - Calories: {calories}, Protein: {protein}, Fat: {fat}, Carbs: {carbs}")
             self.save_food_entry(calories, protein, carbs, fat)
-            self.clear_entries()                # Empties boxes for new food item
+            self.clear_entries()
         else:
-            messagebox.showerror("Error", "Please fill in all fields.")  # Error if there is an empty field
+            # Error if there is an empty field
+            messagebox.showerror("Error", "Please fill in all fields.")
 
     def save_food_entry(self, calories, protein, carbs, fat):
         if self.current_user is None:
@@ -315,12 +322,13 @@ class NutritionTracker(tk.Tk):
         with open(filename, 'a') as file:
             file.write(f"{current_date}, {calories}, {protein}, {carbs}, {fat}\n")
 
-    def clear_entries(self):                    # Empties contents of all entries for new entries to be added
-        self.food_entry.delete(0, tk.END)       # Clears food entry
-        self.calories_entry.delete(0, tk.END)   # Clears calories entry
-        self.protein_entry.delete(0, tk.END)    # Clears protein entry
-        self.fat_entry.delete(0, tk.END)        # Clears fat entry
-        self.carbs_entry.delete(0, tk.END)      # Clears carbs entry
+    # Empties contents of all entries for new entries to be added
+    def clear_entries(self):
+        self.food_entry.delete(0, tk.END)
+        self.calories_entry.delete(0, tk.END)
+        self.protein_entry.delete(0, tk.END)
+        self.fat_entry.delete(0, tk.END)
+        self.carbs_entry.delete(0, tk.END)
 
     
 
@@ -341,9 +349,10 @@ class NutritionTracker(tk.Tk):
 
         # "{Name}'s Progress!" text at the top middle
         welcome_label = tk.Label(self, text=f"{user_name}'s Progress!", bg="white", font=("Arial", 20))
-        welcome_label.pack(pady=(10, 20))           # Add some padding
+        welcome_label.pack(pady=(10, 20))
 
-        frameChartsLT = tk.Frame(self)              # Corrected to use self
+        # Corrected to use self
+        frameChartsLT = tk.Frame(self)
         frameChartsLT.pack()
 
         #######################################################
