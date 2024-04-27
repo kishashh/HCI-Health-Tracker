@@ -29,62 +29,83 @@ class NutritionTracker(tk.Tk):
     # Making Intro
     #######################################################
     def create_widgets_intro(self):
+        # Clear screen for new screen contents, does not do anything when first turning on
         self.clear_screen()
-        welcome_label = tk.Label(self, text="Welcome!", font=("Arial", 20))
-        welcome_label.pack(pady=(10, 20))
 
-        name_label = tk.Label(self, text="Name:")
-        name_label.pack()
+        # Add label at the top of the intro screen
+        welcome_label = tk.Label(self, text="Welcome!", font=("Arial", 24))
+        welcome_label.place(relx=0.5, rely=0.1, anchor="center")
 
-        self.name_entry = tk.Entry(self)
-        self.name_entry.pack()
+        # Add label for adding name
+        name_label = tk.Label(self, text="Name:", font=("Arial", 14))
+        name_label.place(relx=0.35, rely=0.25, anchor="center")
 
-        age_label = tk.Label(self, text="Age")
-        age_label.pack()
+        # Add entry for name
+        self.name_entry = tk.Entry(self, font=("Arial", 14))
+        self.name_entry.place(relx=0.35, rely=0.3125, anchor="center")
 
-        self.age_entry = tk.Entry(self)
-        self.age_entry.pack()
+        # Add label for age
+        age_label = tk.Label(self, text="Age", font=("Arial", 14))
+        age_label.place(relx=0.35, rely=0.375, anchor="center")
 
-        weight_label = tk.Label(self, text="Weight:")
-        weight_label.pack()
+        # Add entry for age
+        self.age_entry = tk.Entry(self, font=("Arial", 14))
+        self.age_entry.place(relx=0.35, rely=0.4375, anchor="center")
 
-        self.weight_entry = tk.Entry(self)
-        self.weight_entry.pack()
+        # Add label for weight
+        weight_label = tk.Label(self, text="Weight:", font=("Arial", 14))
+        weight_label.place(relx=0.35, rely=0.5, anchor="center")
 
-        sex_label = tk.Label(self, text="Sex:")
-        sex_label.pack()
+        # Add entry for weight
+        self.weight_entry = tk.Entry(self, font=("Arial", 14))
+        self.weight_entry.place(relx=0.35, rely=0.5625, anchor="center")
+
+        # Add label for sex with options for sex
+        sex_label = tk.Label(self, text="Sex:", font=("Arial", 14))
+        sex_label.place(relx=0.35, rely=0.625, anchor="center")
         gender_options = ["Male", "Female"]
 
-        self.sex_combobox = ttk.Combobox(self, values=gender_options, state="readonly")
+        # Add combo box for selecting sex
+        self.sex_combobox = ttk.Combobox(self, values=gender_options, state="readonly", font=("Arial", 14))
         self.sex_combobox.set("Select a Sex")
-        self.sex_combobox.pack()
+        self.sex_combobox.place(relx=0.35, rely=0.6875, anchor="center")
 
-        height_label = tk.Label(self, text="Height (in):")
-        height_label.pack()
+        # Add label for height
+        height_label = tk.Label(self, text="Height (in):", font=("Arial", 14))
+        height_label.place(relx=0.65, rely=0.3125, anchor="center")
 
-        self.height_entry = tk.Entry(self)
-        self.height_entry.pack()
+        # Add entry for height
+        self.height_entry = tk.Entry(self, font=("Arial", 14))
+        self.height_entry.place(relx=0.65, rely=0.375, anchor="center")
 
-        activity_label = tk.Label(self, text="Activity:")
-        activity_label.pack()
+        # Add label for activity
+        activity_label = tk.Label(self, text="Activity:", font=("Arial", 14))
+        activity_label.place(relx=0.65, rely=0.4375, anchor="center")
+
+        # Add combo box options and combo box for activity
         activity_options = ["None", "Light (1-3 days)", "Moderate (3-5 days)", "Hard (6-7 days)"]
-        self.activity_combobox = ttk.Combobox(self, values=activity_options, state="readonly")
+        self.activity_combobox = ttk.Combobox(self, values=activity_options, state="readonly", font=("Arial", 14))
         self.activity_combobox.set("Select an Activity Level")
-        self.activity_combobox.pack()
+        self.activity_combobox.place(relx=0.65, rely=0.5, anchor="center")
 
-        plan_label = tk.Label(self, text="Plan:")
-        plan_label.pack()
+        # Add label for plan option
+        plan_label = tk.Label(self, text="Plan:", font=("Arial", 14))
+        plan_label.place(relx=0.65, rely=0.5625, anchor="center")
 
+        # Add combo box options and combo box for selecting plan
         plan_options = ["Gain Weight", "Maintain Weight", "Lose Weight"]
-        self.plan_combobox = ttk.Combobox(self, values=plan_options, state="readonly")
+        self.plan_combobox = ttk.Combobox(self, values=plan_options, state="readonly", font=("Arial", 14))
         self.plan_combobox.set("Select a Plan")
-        self.plan_combobox.pack()
+        self.plan_combobox.place(relx=0.65, rely=0.625, anchor="center")
 
-        continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue)
-        continue_button.pack()
+        # Add continue button
+        continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue, font=("Arial", 14))
+        continue_button.place(relx=0.4, rely=0.85, anchor="center")
 
-        login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login)
-        login_button.pack()
+        # Add login button
+        login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login, font=("Arial", 14))
+        login_button.place(relx=0.6, rely=0.85, anchor="center")
+
     def save_data_and_continue(self):
         # Gather user data
         user_name = self.name_entry.get()
@@ -158,11 +179,11 @@ class NutritionTracker(tk.Tk):
         home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))    # Food name section
         home_screen_label.pack(pady=(10, 20))   # Add some padding
 
-        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)   # Button to add food
+        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)    # Button to add food
         add_food_button.pack(pady=(10,20))      # Add some padding
 
-        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress)   # Button to add food
-        show_progress.pack(pady=(10,20))      # Add some padding
+        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress) # Button to add food
+        show_progress.pack(pady=(10,20))        # Add some padding
 
 
     #######################################################
@@ -273,22 +294,30 @@ class NutritionTracker(tk.Tk):
     # Making Login Screen
     #######################################################
     def create_widgets_login(self):
+        # Clear screen for new screen contents
         self.clear_screen()
-        # Username Entry
+
+        # Add label for username
         username_label = tk.Label(self, text="Enter your name:", font=("Arial", 14))
-        username_label.pack(pady=(20, 10))
+        username_label.place(relx=0.5, rely=0.4, anchor="center")
 
+        # Add entry for username
         self.username_entry = tk.Entry(self, font=("Arial", 14))
-        self.username_entry.pack()
+        self.username_entry.place(relx=0.5, rely=0.5, anchor="center")
 
-            # Set focus to username entry
+        # Set focus to username entry
         self.username_entry.focus_set()
 
-        # Login Button
+        # Add login Button
         login_button = tk.Button(self, text="Log In", command=self.login_user, font=("Arial", 14))
-        login_button.pack(pady=(10, 20))
+        login_button.place(relx=0.5, rely=0.6, anchor="center")
+
+        # Add back button
+        back_button = tk.Button(self, text="Back", command=self.create_widgets_intro, font=("Arial", 14))
+        back_button.place(relx=0.5, rely=0.85, anchor="center")
+
     def login_user(self):
-            # Get the username from the entry
+        # Get the username from the entry
         username = self.username_entry.get()
 
         # Check if the account file exists
