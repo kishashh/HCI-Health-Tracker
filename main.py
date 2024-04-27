@@ -4,10 +4,15 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+#<<<<<<< Chart-Data-Input
+#from datetime import datetime, timedelta
+#from collections import defaultdict
+#=======
 from tkinter import PhotoImage
 import os
 from datetime import datetime
 
+#>>>>>>> main
 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -323,38 +328,130 @@ class NutritionTracker(tk.Tk):
     # Making Progress Screen
     #######################################################
     def create_widgets_progress(self, user_name, calorie_goal):
-        # TODO: get the food data from add_food for the information below
-
-        # "Your Progress!" text at the top middle
         self.clear_screen()
 
-        welcome_label = tk.Label(self, text=f"{user_name}'s progress!", font=("Arial", 20))
-        welcome_label.pack(pady=(10, 20))       # Add some padding
+        # Get the current date and format it
+        current_date = datetime.now()
+        today = current_date.strftime("%A")
 
-        frameChartsLT = tk.Frame(self)          # Corrected to use self
-        frameChartsLT.pack() 
+        # "{Name}'s Progress!" text at the top middle
+        welcome_label = tk.Label(self, text=f"{user_name}'s Progress!", font=("Arial", 20))
+        welcome_label.pack(pady=(10, 20))           # Add some padding
 
-        barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-        barvalue = [1,2,3,4,5,6,7]
-        calavg = sum(barvalue)/7
+        frameChartsLT = tk.Frame(self)              # Corrected to use self
+        frameChartsLT.pack()
 
-        bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
-        bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
-        bar_ax.bar(barcat, barvalue, color='skyblue')
-        bar_ax.set_title('Average Calories this week: ' + str(calavg))
-        bar_ax.set_xlabel('Day of the Week')
-        bar_ax.set_ylabel('Days Calorie Intake')
-        bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
+        #######################################################
+        # Bar Chart
+        #######################################################
 
-        chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
-        chart1.get_tk_widget().pack(side=tk.LEFT)
-        
+        seven_days_ago = ((current_date - timedelta(days=7)).date()).strftime("%m/%d/%Y")
+
+        # Open the user's file and check for matches with dates 7 days ago or earlier
+        with open(f'Accounts\{user_name}.txt', 'r') as file:
+            for line in file:
+                items = line.strip().split(',')
+                date_item = items[2].strip()
+
+                date1 = datetime.strptime(date_item, "%m/%d/%Y")
+                date2 = datetime.strptime(seven_days_ago, "%m/%d/%Y")
+
+                difference = date1 - date2
+                seven_days = timedelta(days=0)
+
+                if difference <= seven_days:
+                    # Match found for a date 7 days ago or earlier, do something here
+                    # Format DOW
+                    if today == "Sunday":
+                        barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                    elif today == "Monday":
+                        barcat = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+                    elif today == "Tuesday":
+                        barcat = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon']
+                    elif today == "Wednesday":
+                        barcat = ['Wed','Thu','Fri','Sat','Sun','Mon','Tue']
+                    elif today == "Thursday":
+                        barcat = ['Thu','Fri','Sat','Sun','Mon','Tue','Wed']
+                    elif today == "Friday":
+                        barcat = ['Fri','Sat','Sun','Mon','Tue','Wed','Thu']
+                    elif today == "Saturday":
+                        barcat = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri']
+                    else: # THIS CANT EXIST AHHH
+                        continue
+
+                    barvalue_temp = defaultdict(int)  # Initialize a dictionary to store sums of values for each unique first item
+
+                    with open(f'Results\{user_name}.txt', 'r') as file:
+                        for line in file:
+                            calcalc = line.strip().split(',')
+                            first_item = calcalc[0].strip()
+                            second_item = calcalc[1].strip()
+
+                            # Update the sum of values for the current first item
+                            barvalue_temp[first_item] += int(second_item)
+
+                    # Convert the dictionary to a list
+                    barvalue_a = [value for key, value in barvalue_temp.items()]
+                    barvalue_a.reverse()
+
+                    barvalue = [0,0,0,0,0,0,0]
+
+                    for i in range(7):
+                        barvalue[i] = barvalue_a[i+1]
+
+                    calavg = sum(barvalue)/7
+
+                    seven_days_ago = current_date - timedelta(days=7) 
+                    bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
+                    bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
+                    bar_ax.bar(barcat, barvalue, color='skyblue')
+                    bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg)[:6])
+                    bar_ax.set_xlabel('Day of the Week')
+                    bar_ax.set_ylabel('Calorie Intake')
+                    bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
+
+                    chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
+                    chart1.get_tk_widget().pack(side=tk.LEFT)
+                else:
+                    # No match found, move to the next line
+                    continue
+
+        #######################################################
+        # Pie Chart
+        #######################################################
+
+        # Initialize variables to store the summed values
+        calories_total = 0
+        protein_total = 0
+        fat_total = 0
+        carbs_total = 0
+
+        # Open the user's file and check for matches with today's date
+        with open(f'Results\{user_name}.txt', 'r') as file:
+            for line in file:
+                # Check if the current line matches today's date
+                items = line.strip().split(',')
+                date_item = items[0].strip()
+
+                # Convert the date string to a datetime object
+                date_item = datetime.strptime(date_item, "%m/%d/%Y")
+
+                if date_item.date() == current_date.date():
+                    # Match found for today's date, sum the values for each nutrient
+                    calories_total += int(items[1])     # sums Calories
+                    protein_total += int(items[2])      # sums Protein
+                    fat_total += int(items[3])          # sums Fat
+                    carbs_total += int(items[4])        # sums Carbs
+                else:
+                    # Stop processing once we've passed today's date
+                    continue
         piecat = ['Protien', 'Fat', 'Carbs']
-        pievalue = [10, 25, 40]    # TODO: make these variables i.e.[protien, fat, carbs] use date like stated above   
+        pievalue = [protein_total, fat_total, carbs_total] 
 
-        fig = Figure(facecolor='gray')                # create a figure object
-        ax = fig.add_subplot(111)               # add an Axes to the figure
-        ax.set_title('Calories Left: ')
+        fig = Figure(facecolor='gray')                  # create a figure object
+        ax = fig.add_subplot(111)                       # add an Axes to the figure
+        cal_left =  int(calorie_goal) - calories_total  # calculate how many calories are left in the day
+        ax.set_title(f'Calories Left: {cal_left}')      # print out calories left
         ax.pie(pievalue, radius=1, labels=piecat, autopct='%0.2f%%', shadow=False)
 
         chart1 = FigureCanvasTkAgg(fig, frameChartsLT)
