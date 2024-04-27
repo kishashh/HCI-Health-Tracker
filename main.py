@@ -148,7 +148,7 @@ class NutritionTracker(tk.Tk):
         # Adjust based on weight goal
         calorie_goal = daily_calories + weight_goal_factors[plan]
 
-        return calorie_goal
+        return int(calorie_goal)
 
 
     #######################################################
@@ -156,6 +156,10 @@ class NutritionTracker(tk.Tk):
     #######################################################
     def create_widgets_home_screen(self, user_name, calorie_goal):
         self.clear_screen()
+
+        # Ensure calorie goal is an integer if it's not already handled in the calculation
+        if isinstance(calorie_goal, float):
+            calorie_goal = int(calorie_goal)
 
         greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 20))
         greeting_label.pack(pady=(10, 20))
@@ -166,8 +170,9 @@ class NutritionTracker(tk.Tk):
         add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)
         add_food_button.pack(pady=(10, 20))
 
-        show_progress_button = tk.Button(self, text="Show Progress", command=self.create_widgets_progress_graph)
+        show_progress_button = tk.Button(self, text="Show Progress", command=self.create_widgets_progress)
         show_progress_button.pack(pady=(10, 20))
+
 
     #######################################################
     # Making Add Food Screen
