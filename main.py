@@ -3,8 +3,9 @@
 ###########################################################
 import tkinter as tk
 from tkinter import ttk
-import os
 from tkinter import messagebox
+from tkinter import PhotoImage
+import os
 from datetime import datetime
 
 
@@ -22,6 +23,8 @@ class NutritionTracker(tk.Tk):
         super().__init__()
         self.title("Nutrition Tracker")
         self.geometry("1050x500")
+        # Image for intro and login background
+        self.intro_login_bg_image = PhotoImage(file='intro_login_background.png')
         self.configure(background="gray")
         self.create_widgets_intro()
         self.food_entries = []  # Initialize the food_entries list
@@ -37,6 +40,10 @@ class NutritionTracker(tk.Tk):
     def create_widgets_intro(self):
         # Clear screen for new screen contents, does not do anything when first turning on
         self.clear_screen()
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.intro_login_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
 
         # Add label at the top of the intro screen
         welcome_label = tk.Label(self, text="Welcome!", font=("Arial", 24))
@@ -354,6 +361,10 @@ class NutritionTracker(tk.Tk):
     def create_widgets_login(self):
         # Clear screen for new screen contents
         self.clear_screen()
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.intro_login_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
 
         # Add label for username
         username_label = tk.Label(self, text="Enter your name:", font=("Arial", 14))
