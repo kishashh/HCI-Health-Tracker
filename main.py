@@ -136,6 +136,8 @@ class NutritionTracker(tk.Tk):
     # Making Progress Screen
     #######################################################
     def create_widgets_progress(self):
+        # TODO: get the food data from add_food for the information below
+
         # "Your Progress!" text at the top middle
         self.clear_screen()
 
@@ -143,17 +145,30 @@ class NutritionTracker(tk.Tk):
         welcome_label.pack(pady=(10, 20))       # Add some padding
 
         frameChartsLT = tk.Frame(self)          # Corrected to use self
-        frameChartsLT.pack()
+        frameChartsLT.pack() 
 
-        # TODO: add bar chart to the left of the pie chart for weekly progress
+        barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+        barvalue = [1,2,3,4,5,6,7]
+        calavg = sum(barvalue)/7
+        print (calavg)
 
-        # TODO: get the food data from add_food for the information below
-        stockListExp = ['Protien', 'Fat', 'Carbs']
-        stockSplitExp = [10, 25, 40]    # TODO: make these variables i.e.[protien, fat, carbs] use date like stated above    
+        bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
+        bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
+        bar_ax.bar(barcat, barvalue, color='skyblue')
+        bar_ax.set_title('Average Calories this week: ' + str(calavg))
+        bar_ax.set_xlabel('Day of the Week')
+        bar_ax.set_ylabel('Days Calorie Intake')
 
-        fig = Figure(facecolor='gray')                          # create a figure object
+        chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
+        chart1.get_tk_widget().pack(side=tk.LEFT)
+        
+        piecat = ['Protien', 'Fat', 'Carbs']
+        pievalue = [10, 25, 40]    # TODO: make these variables i.e.[protien, fat, carbs] use date like stated above   
+
+        fig = Figure(facecolor='gray')                # create a figure object
         ax = fig.add_subplot(111)               # add an Axes to the figure
-        ax.pie(stockSplitExp, radius=1, labels=stockListExp, autopct='%0.2f%%', shadow=False)
+        ax.set_title('Calories Left: ')
+        ax.pie(pievalue, radius=1, labels=piecat, autopct='%0.2f%%', shadow=False)
 
         chart1 = FigureCanvasTkAgg(fig, frameChartsLT)
         chart1.get_tk_widget().pack()
