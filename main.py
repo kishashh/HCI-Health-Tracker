@@ -115,7 +115,7 @@ class NutritionTracker(tk.Tk):
     def save_data_and_continue(self):
         # Gather user data
         user_name = self.name_entry.get()
-        calorie_goal = self.calculate_calorie_goal()
+        # calorie_goal = self.calculate_calorie_goal()
         # Get the current date
         current_date = datetime.now().strftime("%m/%d/%Y")
         
@@ -144,7 +144,7 @@ class NutritionTracker(tk.Tk):
             file.write("")
 
         self.current_user = user_name
-
+        
         # Now proceed to the home screen
         self.create_widgets_home_screen(user_name, calorie_goal)
 
@@ -195,9 +195,9 @@ class NutritionTracker(tk.Tk):
     def create_widgets_home_screen(self, user_name, calorie_goal):
         self.clear_screen()
 
-        # Ensure calorie goal is an integer if it's not already handled in the calculation
-        if isinstance(calorie_goal, float):
-            calorie_goal = int(calorie_goal)
+        # # Ensure calorie goal is an integer if it's not already handled in the calculation
+        # if isinstance(calorie_goal, float):
+        #     calorie_goal = int(calorie_goal)
 
         greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 20))
         greeting_label.pack(pady=(10, 20))
@@ -368,7 +368,8 @@ class NutritionTracker(tk.Tk):
             with open(filename, 'r') as file:
                 lines = file.readlines()
                 # Assuming the last line contains the calorie goal
-                calorie_goal = lines[-1].strip().split(", ")[-1]
+                calorie_goal = lines[-1].strip().split(", ")[1]
+
                 
             self.create_widgets_home_screen(username, calorie_goal)
         except FileNotFoundError:
