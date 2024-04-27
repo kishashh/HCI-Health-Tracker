@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 class NutritionTracker(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Welcome Page")
+        self.title("Nutrition Tracker")
         self.geometry("1050x500")
         self.configure(background="gray")
         self.create_widgets_intro()
@@ -70,9 +70,8 @@ class NutritionTracker(tk.Tk):
         add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)   # Button to add food
         add_food_button.pack(pady=(10,20))      # Add some padding
 
-        add_food_button = tk.Button(self, text="Show Progress", command=self.create_widgets_progress_graph)   # Button to add food
-        add_food_button.pack(pady=(10,20))      # Add some padding
-
+        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress)   # Button to add food
+        show_progress.pack(pady=(10,20))      # Add some padding
 
 
     #######################################################
