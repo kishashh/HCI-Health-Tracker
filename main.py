@@ -85,6 +85,7 @@ class NutritionTracker(tk.Tk):
 
         login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login)
         login_button.pack()
+
     def save_data_and_continue(self):
         # Gather user data
         user_name = self.name_entry.get()
@@ -99,14 +100,21 @@ class NutritionTracker(tk.Tk):
         calorie_goal = self.calculate_calorie_goal()
         
         # Save data to file named after the user in the "Accounts" folder
-        accounts_folder = "Accounts"
-        os.makedirs(accounts_folder, exist_ok=True)  # Ensure the directory exists
-        filename = os.path.join(accounts_folder, f"{user_name}.txt")
+        results_folder = "Accounts"
+        os.makedirs(results_folder, exist_ok=True)  # Ensure the directory exists
+        filename = os.path.join(results_folder, f"{user_name}.txt")
+        
+        results_folder = "Results"
+        os.makedirs(results_folder, exist_ok=True)  # Ensure the directory exists
+        filename2 = os.path.join(results_folder, f"{user_name}.txt")
         
         with open(filename, 'w') as file:
             # Write the name and calorie goal to the file in the specified format
             file.write(f"{user_name}, {calorie_goal}\n")
         
+        with open(filename2, 'w') as file:
+            file.write("");
+
         # Now proceed to the home screen
         self.create_widgets_home_screen(user_name, calorie_goal)
 
@@ -299,8 +307,8 @@ class NutritionTracker(tk.Tk):
     def login_user(self):
             # Get the username from the entry
         username = self.username_entry.get()
-        accounts_folder = "Accounts"
-        filename = os.path.join(accounts_folder, f"{username}.txt")
+        results_folder = "Accounts"
+        filename = os.path.join(results_folder, f"{username}.txt")
         
         try:
             with open(filename, 'r') as file:
