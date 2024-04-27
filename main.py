@@ -208,7 +208,7 @@ class NutritionTracker(tk.Tk):
         home_screen_label.place(relx=0.5, rely=0.1, anchor="center")
 
         # Add button to go to add food
-        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food, font=("Arial", 14))
+        add_food_button = tk.Button(self, text="Add Food", command=lambda: self.create_widgets_add_food(user_name, calorie_goal), font=("Arial", 14))
         add_food_button.place(relx=0.35, rely=0.5, anchor="center")
 
         # Add button to go to progress page
@@ -224,7 +224,7 @@ class NutritionTracker(tk.Tk):
     #######################################################
     # Making Add Food Screen
     #######################################################
-    def create_widgets_add_food(self):          # Creating widgets for application
+    def create_widgets_add_food(self, user_name, calorie_goal):          # Creating widgets for application
         self.clear_screen()
         tk.Label(self, text="Food:").grid(row=0, column=0, padx=5, pady=5)          # Food name section
         tk.Label(self, text="Calories:").grid(row=0, column=1, padx=5, pady=5)      # Calories section
@@ -253,8 +253,13 @@ class NutritionTracker(tk.Tk):
         self.food_listbox = tk.Listbox(self, width=50)                              # Creation of the listbox
         self.food_listbox.grid(row=3, column=0, columnspan=5, padx=5, pady=5)       # Placemtn of the listbox
 
-        # self.add_button = tk.Button(self, text="Back to Home", command=self.back_to_home)  # Button to go back to home screen
-        # self.add_button.grid(row=4, column=0, columnspan=5, pady=10)                # Placemtn of the listbox
+        # Add back button
+        back_button = tk.Button(self, text="Back", command=lambda: self.create_widgets_home_screen(user_name, calorie_goal), font=("Arial", 14))
+        back_button.place(relx=0.5, rely=0.85, anchor="center")
+
+        # Add logout button
+        logout_button = tk.Button(self, text="Logout", background = "red", command=self.create_widgets_intro, font=("Arial", 14))
+        logout_button.place(relx=1.0, anchor="ne")
 
     def add_food(self):                         # Def related to adding food button
         food = self.food_entry.get()            # Calls for food name input
