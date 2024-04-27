@@ -102,14 +102,11 @@ class NutritionTracker(tk.Tk):
 
         # Add continue button
         continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue, font=("Arial", 14))
-        continue_button.place(relx=0.4, rely=0.85, anchor="center")
-
-        login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login)
-        login_button.pack()
+        continue_button.place(relx=0.35, rely=0.85, anchor="center")
 
         # Add login button
         login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login, font=("Arial", 14))
-        login_button.place(relx=0.6, rely=0.85, anchor="center")
+        login_button.place(relx=0.65, rely=0.85, anchor="center")
 
     def save_data_and_continue(self):
         # Gather user data
@@ -140,7 +137,7 @@ class NutritionTracker(tk.Tk):
             file.write(f"{user_name}, {calorie_goal}, {current_date}\n")
         
         with open(filename2, 'w') as file:
-            file.write("");
+            file.write("")
 
         # Now proceed to the home screen
         self.create_widgets_home_screen(user_name, calorie_goal)
