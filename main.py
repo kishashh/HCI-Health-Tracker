@@ -397,7 +397,7 @@ class NutritionTracker(tk.Tk):
                     calavg = sum(barvalue)/7
 
                     seven_days_ago = current_date - timedelta(days=7) 
-                    bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
+                    bar_fig = Figure(figsize=(4, 4), dpi=100, facecolor='gray')
                     bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
                     bar_ax.bar(barcat, barvalue, color='skyblue')
                     bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg)[:6])
@@ -443,7 +443,7 @@ class NutritionTracker(tk.Tk):
         piecat = ['Protien', 'Fat', 'Carbs']
         pievalue = [protein_total, fat_total, carbs_total] 
 
-        fig = Figure(facecolor='gray')                  # create a figure object
+        fig = Figure(figsize=(4, 4), facecolor='gray')                  # create a figure object
         ax = fig.add_subplot(111)                       # add an Axes to the figure
         cal_left =  int(calorie_goal) - calories_total  # calculate how many calories are left in the day
         ax.set_title(f'Calories Left: {cal_left}')      # print out calories left
