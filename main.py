@@ -3,10 +3,16 @@
 ###########################################################
 import tkinter as tk
 from tkinter import ttk
-import os
 from tkinter import messagebox
-from datetime import datetime, timedelta
-from collections import defaultdict
+#<<<<<<< Chart-Data-Input
+#from datetime import datetime, timedelta
+#from collections import defaultdict
+#=======
+from tkinter import PhotoImage
+import os
+from datetime import datetime
+
+#>>>>>>> main
 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -22,6 +28,9 @@ class NutritionTracker(tk.Tk):
         super().__init__()
         self.title("Nutrition Tracker")
         self.geometry("1050x500")
+        # Image for intro and login background
+        self.intro_login_bg_image = PhotoImage(file='intro_login_background.png')
+        self.add_food_bg_image = PhotoImage(file='add_food_background.png')
         self.configure(background="gray")
         self.create_widgets_intro()
         self.food_entries = []  # Initialize the food_entries list
@@ -38,8 +47,12 @@ class NutritionTracker(tk.Tk):
         # Clear screen for new screen contents, does not do anything when first turning on
         self.clear_screen()
 
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.intro_login_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
+
         # Add label at the top of the intro screen
-        welcome_label = tk.Label(self, text="Welcome!", font=("Arial", 24))
+        welcome_label = tk.Label(self, text="Welcome!", fg="black", highlightthickness=0, font=("Arial", 24))
         welcome_label.place(relx=0.5, rely=0.1, anchor="center")
 
         # Add label for adding name
@@ -66,23 +79,23 @@ class NutritionTracker(tk.Tk):
         self.weight_entry = tk.Entry(self, font=("Arial", 14))
         self.weight_entry.place(relx=0.35, rely=0.5625, anchor="center")
 
+        # Add label for height
+        height_label = tk.Label(self, text="Height (in):", font=("Arial", 14))
+        height_label.place(relx=0.35, rely=0.625, anchor="center")
+
+        # Add entry for height
+        self.height_entry = tk.Entry(self, font=("Arial", 14))
+        self.height_entry.place(relx=0.35, rely=0.6875, anchor="center")
+
         # Add label for sex with options for sex
         sex_label = tk.Label(self, text="Sex:", font=("Arial", 14))
-        sex_label.place(relx=0.35, rely=0.625, anchor="center")
+        sex_label.place(relx=0.65, rely=0.3125, anchor="center")
         gender_options = ["Male", "Female"]
 
         # Add combo box for selecting sex
         self.sex_combobox = ttk.Combobox(self, values=gender_options, state="readonly", font=("Arial", 14))
         self.sex_combobox.set("Select a Sex")
-        self.sex_combobox.place(relx=0.35, rely=0.6875, anchor="center")
-
-        # Add label for height
-        height_label = tk.Label(self, text="Height (in):", font=("Arial", 14))
-        height_label.place(relx=0.65, rely=0.3125, anchor="center")
-
-        # Add entry for height
-        self.height_entry = tk.Entry(self, font=("Arial", 14))
-        self.height_entry.place(relx=0.65, rely=0.375, anchor="center")
+        self.sex_combobox.place(relx=0.65, rely=0.375, anchor="center")
 
         # Add label for activity
         activity_label = tk.Label(self, text="Activity:", font=("Arial", 14))
@@ -226,36 +239,50 @@ class NutritionTracker(tk.Tk):
     #######################################################
     def create_widgets_add_food(self, user_name, calorie_goal):          # Creating widgets for application
         self.clear_screen()
-        tk.Label(self, text="Food:").grid(row=0, column=0, padx=5, pady=5)          # Food name section
-        tk.Label(self, text="Calories:").grid(row=0, column=1, padx=5, pady=5)      # Calories section
-        tk.Label(self, text="Protein (g):").grid(row=0, column=2, padx=5, pady=5)   # Protein section
-        tk.Label(self, text="Fat (g):").grid(row=0, column=3, padx=5, pady=5)       # Fat section
-        tk.Label(self, text="Carbs (g):").grid(row=0, column=4, padx=5, pady=5)     # Carbs section
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.add_food_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
+
+        # Add label for food name
+        tk.Label(self, text="Food:", font=("Arial", 14), bg="white").place(relx=0.2, rely=0.2, anchor="center")
+
+        # Add label for calories
+        tk.Label(self, text="Calories:", font=("Arial", 14), bg="white").place(relx=0.35, rely=0.2, anchor="center")
+
+        # Add label for protein
+        tk.Label(self, text="Protein (g):", font=("Arial", 14), bg="white").place(relx=0.5, rely=0.2, anchor="center")
+
+        # Add label for fat
+        tk.Label(self, text="Fat (g):", font=("Arial", 14), bg="white").place(relx=0.65, rely=0.2, anchor="center")
+
+        # Add label for carbs
+        tk.Label(self, text="Carbs (g):", font=("Arial", 14), bg="white").place(relx=0.8, rely=0.2, anchor="center")
 
         self.food_entry = tk.Entry(self)                            # Adds widget food name information to self object
-        self.food_entry.grid(row=1, column=0, padx=5, pady=5)       # Assign input box below food label
+        self.food_entry.place(relx=0.2, rely=0.3, anchor="center")       # Assign input box below food label
 
         self.calories_entry = tk.Entry(self)                        # Adds widget calories information to self object
-        self.calories_entry.grid(row=1, column=1, padx=5, pady=5)   # Assign input box below calories label
+        self.calories_entry.place(relx=0.35, rely=0.3, anchor="center")   # Assign input box below calories label
 
         self.protein_entry = tk.Entry(self)                         # Adds widget protein information to self object
-        self.protein_entry.grid(row=1, column=2, padx=5, pady=5)    # Assign input box below protein label
+        self.protein_entry.place(relx=0.5, rely=0.3, anchor="center")    # Assign input box below protein label
 
         self.fat_entry = tk.Entry(self)                             # Adds widget fat information to self object
-        self.fat_entry.grid(row=1, column=3, padx=5, pady=5)        # Assign input box below fat label
+        self.fat_entry.place(relx=0.65, rely=0.3, anchor="center")        # Assign input box below fat label
 
         self.carbs_entry = tk.Entry(self)                           # Adds widget carbs information to self object
-        self.carbs_entry.grid(row=1, column=4, padx=5, pady=5)      # Assign input box below carbs label
+        self.carbs_entry.place(relx=0.8, rely=0.3, anchor="center")      # Assign input box below carbs label
 
-        self.add_button = tk.Button(self, text="Add Food", command=self.add_food)   # Button to add food
-        self.add_button.grid(row=2, column=0, columnspan=5, pady=10)                # Placement of the button
+        self.add_button = tk.Button(self, text="Add Food", command=self.add_food, font=("Arial", 14))   # Button to add food
+        self.add_button.place(relx=0.5, rely=0.4, anchor="center")                # Placement of the button
 
         self.food_listbox = tk.Listbox(self, width=50)                              # Creation of the listbox
-        self.food_listbox.grid(row=3, column=0, columnspan=5, padx=5, pady=5)       # Placemtn of the listbox
+        self.food_listbox.place(relx=0.5, rely=0.65, anchor="center")       # Placemtn of the listbox
 
         # Add back button
         back_button = tk.Button(self, text="Back", command=lambda: self.create_widgets_home_screen(user_name, calorie_goal), font=("Arial", 14))
-        back_button.place(relx=0.5, rely=0.85, anchor="center")
+        back_button.place(relx=0.5, rely=0.9, anchor="center")
 
         # Add logout button
         logout_button = tk.Button(self, text="Logout", background = "red", command=self.create_widgets_intro, font=("Arial", 14))
@@ -446,6 +473,10 @@ class NutritionTracker(tk.Tk):
     def create_widgets_login(self):
         # Clear screen for new screen contents
         self.clear_screen()
+
+        # Add label for adding background image
+        background_label = tk.Label(self, image=self.intro_login_bg_image)
+        background_label.place(relwidth=1.0, relheight=1.0)
 
         # Add label for username
         username_label = tk.Label(self, text="Enter your name:", font=("Arial", 14))
