@@ -6,7 +6,7 @@ from tkinter import ttk
 import os
 from tkinter import messagebox
 from datetime import datetime, timedelta
-
+from collections import defaultdict
 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -327,14 +327,10 @@ class NutritionTracker(tk.Tk):
                 date_item = items[2].strip()
 
                 date1 = datetime.strptime(date_item, "%m/%d/%Y")
-                print(date1)
                 date2 = datetime.strptime(seven_days_ago, "%m/%d/%Y")
-                print(date2)
 
                 difference = date1 - date2
                 seven_days = timedelta(days=0)
-
-                print(difference)
 
                 if difference <= seven_days:
                     # Match found for a date 7 days ago or earlier, do something here
@@ -355,15 +351,34 @@ class NutritionTracker(tk.Tk):
                         barcat = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri']
                     else: # THIS CANT EXIST AHHH
                         continue
-                    
-                    barvalue = [1,2,3,4,5,6,7]
+
+                    barvalue_temp = defaultdict(int)  # Initialize a dictionary to store sums of values for each unique first item
+
+                    with open(f'Results\{user_name}.txt', 'r') as file:
+                        for line in file:
+                            calcalc = line.strip().split(',')
+                            first_item = calcalc[0].strip()
+                            second_item = calcalc[1].strip()
+
+                            # Update the sum of values for the current first item
+                            barvalue_temp[first_item] += int(second_item)
+
+                    # Convert the dictionary to a list
+                    barvalue_a = [value for key, value in barvalue_temp.items()]
+                    barvalue_a.reverse()
+
+                    barvalue = [0,0,0,0,0,0,0]
+
+                    for i in range(7):
+                        barvalue[i] = barvalue_a[i+1]
+
                     calavg = sum(barvalue)/7
 
                     seven_days_ago = current_date - timedelta(days=7) 
                     bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
                     bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
                     bar_ax.bar(barcat, barvalue, color='skyblue')
-                    bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg))
+                    bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg)[:6])
                     bar_ax.set_xlabel('Day of the Week')
                     bar_ax.set_ylabel('Calorie Intake')
                     bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
@@ -402,7 +417,7 @@ class NutritionTracker(tk.Tk):
                     carbs_total += int(items[4])        # sums Carbs
                 else:
                     # Stop processing once we've passed today's date
-                    break
+                    continue
         piecat = ['Protien', 'Fat', 'Carbs']
         pievalue = [protein_total, fat_total, carbs_total] 
 
