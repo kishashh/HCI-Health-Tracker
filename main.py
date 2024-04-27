@@ -193,17 +193,25 @@ class NutritionTracker(tk.Tk):
         if isinstance(calorie_goal, float):
             calorie_goal = int(calorie_goal)
 
-        greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 20))
-        greeting_label.pack(pady=(10, 20))
+        # Add sentence about calorie goal for specific day
+        greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 14))
+        greeting_label.place(relx=0.5, rely=0.2, anchor="center")
 
-        home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))
-        home_screen_label.pack(pady=(10, 20))
+        # Add label for home
+        home_screen_label = tk.Label(self, text="Home", font=("Arial", 24))
+        home_screen_label.place(relx=0.5, rely=0.1, anchor="center")
 
-        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)    # Button to add food
-        add_food_button.pack(pady=(10,20))      # Add some padding
+        # Add button to go to add food
+        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food, font=("Arial", 14))
+        add_food_button.place(relx=0.35, rely=0.5, anchor="center")
 
-        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress) # Button to add food
-        show_progress.pack(pady=(10,20))        # Add some padding
+        # Add button to go to progress page
+        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress, font=("Arial", 14))
+        show_progress.place(relx=0.65, rely=0.5, anchor="center")
+
+        # Add logout button
+        logout_button = tk.Button(self, text="Logout", background = "red", command=self.create_widgets_intro, font=("Arial", 14))
+        logout_button.place(relx=1.0, anchor="ne")
 
 
     #######################################################
