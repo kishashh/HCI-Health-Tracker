@@ -87,31 +87,28 @@ class NutritionTracker(tk.Tk):
         login_button.pack()
     def save_data_and_continue(self):
         # Gather user data
-        user_data = {
-            "name": self.name_entry.get(),
-            "age": self.age_entry.get(),
-            "weight": self.weight_entry.get(),
-            "sex": self.sex_combobox.get(),
-            "height": self.height_entry.get(),
-            "activity": self.activity_combobox.get(),
-            "plan": self.plan_combobox.get()
-        }
-
+        user_name = self.name_entry.get()
+        
+        # Ensure that the name field is not empty
+        if not user_name.strip():
+            messagebox.showerror("Error", "Please enter your name.")
+            return
+        
         # Calculate the calorie goal
         calorie_goal = self.calculate_calorie_goal()
-
+        
         # Save data to file named after the user in the "Accounts" folder
         accounts_folder = "Accounts"
         os.makedirs(accounts_folder, exist_ok=True)  # Ensure the directory exists
-        filename = os.path.join(accounts_folder, f"{user_data['name']}.txt")
+        filename = os.path.join(accounts_folder, f"{user_name}.txt")
+        
         with open(filename, 'w') as file:
-            for key, value in user_data.items():
-                file.write(f"{key}: {value}\n")
-            # Write the calculated calorie goal to the file
-            file.write(f"Calorie Goal: {calorie_goal}\n")
-
+            # Write the name and calorie goal to the file in the specified format
+            file.write(f"{user_name}, {calorie_goal}\n")
+        
         # Now proceed to the home screen
         self.create_widgets_home_screen()
+
 
     
     def calculate_calorie_goal(self):
