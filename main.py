@@ -4,6 +4,8 @@
 import tkinter as tk
 from tkinter import ttk
 import os
+from tkinter import messagebox
+
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
@@ -37,11 +39,38 @@ class NutritionTracker(tk.Tk):
         self.name_entry = tk.Entry(self)
         self.name_entry.pack()
 
+        age_label = tk.Label(self, text="Age")
+        age_label.pack()
+
+        self.age_entry = tk.Entry(self)
+        self.age_entry.pack()
+
         weight_label = tk.Label(self, text="Weight:")
         weight_label.pack()
 
         self.weight_entry = tk.Entry(self)
         self.weight_entry.pack()
+
+        sex_label = tk.Label(self, text="Sex:")
+        sex_label.pack()
+        gender_options = ["Male", "Female"]
+
+        self.sex_combobox = ttk.Combobox(self, values=gender_options, state="readonly")
+        self.sex_combobox.set("Select a Sex")
+        self.sex_combobox.pack()
+
+        height_label = tk.Label(self, text="Height (in):")
+        height_label.pack()
+
+        self.height_entry = tk.Entry(self)
+        self.height_entry.pack()
+
+        activity_label = tk.Label(self, text="Activity:")
+        activity_label.pack()
+        activity_options = ["None", "Light (1-3 days)", "Moderate (3-5 days)", "Hard (6-7 days)"]
+        self.activity_combobox = ttk.Combobox(self, values=activity_options, state="readonly")
+        self.activity_combobox.set("Select an Activity Level")
+        self.activity_combobox.pack()
 
         plan_label = tk.Label(self, text="Plan:")
         plan_label.pack()
@@ -51,13 +80,34 @@ class NutritionTracker(tk.Tk):
         self.plan_combobox.set("Select a Plan")
         self.plan_combobox.pack()
 
-        continue_button = tk.Button(self, text="Continue", command=self.create_widgets_home_screen)
+        continue_button = tk.Button(self, text="Continue", command=self.save_data_and_continue)
         continue_button.pack()
 
         login_button = tk.Button(self, text="Log in Already", command=self.create_widgets_login)
         login_button.pack()
+    def save_data_and_continue(self):
+        # Gather user data
+        user_data = {
+            "name": self.name_entry.get(),
+            "age": self.age_entry.get(),
+            "weight": self.weight_entry.get(),
+            "sex": self.sex_combobox.get(),
+            "height": self.height_entry.get(),
+            "activity": self.activity_combobox.get(),
+            "plan": self.plan_combobox.get()
+        }
 
+        # Save data to file named after the user in the "Accounts" folder
+        accounts_folder = "Accounts"
+        os.makedirs(accounts_folder, exist_ok=True)  # Ensure the directory exists
+        filename = os.path.join(accounts_folder, f"{user_data['name']}.txt")
+        with open(filename, 'w') as file:
+            for key, value in user_data.items():
+                file.write(f"{key}: {value}\n")
 
+        # Now proceed to the home screen
+        self.create_widgets_home_screen()
+    
 
     #######################################################
     # Making Home Screen
@@ -190,10 +240,25 @@ class NutritionTracker(tk.Tk):
         self.username_entry = tk.Entry(self, font=("Arial", 14))
         self.username_entry.pack()
 
+            # Set focus to username entry
+        self.username_entry.focus_set()
+
         # Login Button
         login_button = tk.Button(self, text="Log In", command=self.login_user, font=("Arial", 14))
         login_button.pack(pady=(10, 20))
+    def login_user(self):
+            # Get the username from the entry
+        username = self.username_entry.get()
 
+        # Check if the account file exists
+        account_file_path = os.path.join("Accounts", f"{username}.txt")
+        if os.path.exists(account_file_path):
+            # File exists, log in successful, proceed to home screen
+            self.create_widgets_home_screen()
+        else:
+            # File does not exist, show an error or prompt to create an account
+            error_label = tk.Label(self, text="Account not found, please try again or register.", foreground="red")
+            error_label.pack()
 
 
     #######################################################
