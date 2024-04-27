@@ -97,6 +97,9 @@ class NutritionTracker(tk.Tk):
             "plan": self.plan_combobox.get()
         }
 
+        # Calculate the calorie goal
+        calorie_goal = self.calculate_calorie_goal()
+
         # Save data to file named after the user in the "Accounts" folder
         accounts_folder = "Accounts"
         os.makedirs(accounts_folder, exist_ok=True)  # Ensure the directory exists
@@ -104,10 +107,51 @@ class NutritionTracker(tk.Tk):
         with open(filename, 'w') as file:
             for key, value in user_data.items():
                 file.write(f"{key}: {value}\n")
+            # Write the calculated calorie goal to the file
+            file.write(f"Calorie Goal: {calorie_goal}\n")
 
         # Now proceed to the home screen
         self.create_widgets_home_screen()
+
     
+    def calculate_calorie_goal(self):
+        # Assuming all entries have been validated and converted to the appropriate data types.
+        age = int(self.age_entry.get())
+        weight_pounds = float(self.weight_entry.get())
+        height_inches = float(self.height_entry.get())
+        sex = self.sex_combobox.get()
+        activity_level = self.activity_combobox.get()
+        plan = self.plan_combobox.get()
+
+        # Define activity level factors
+        activity_factors = {
+            "None": 1.2,
+            "Light (1-3 days)": 1.375,
+            "Moderate (3-5 days)": 1.55,
+            "Hard (6-7 days)": 1.9
+        }
+
+        # Define weight goal factors
+        weight_goal_factors = {
+            "Lose Weight": -500,
+            "Maintain Weight": 0,
+            "Gain Weight": 500
+        }
+
+        # Calculate BMR (Basal Metabolic Rate)
+        if sex == "Female":
+            bmr = 655 + (4.35 * weight_pounds) + (4.7 * height_inches) - (4.7 * age)
+        else:  # Male
+            bmr = 66 + (6.23 * weight_pounds) + (12.7 * height_inches) - (6.8 * age)
+
+        # Calculate total daily calorie needs
+        daily_calories = bmr * activity_factors[activity_level]
+
+        # Adjust based on weight goal
+        calorie_goal = daily_calories + weight_goal_factors[plan]
+
+        return calorie_goal
+
 
     #######################################################
     # Making Home Screen
