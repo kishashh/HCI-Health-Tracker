@@ -88,6 +88,7 @@ class NutritionTracker(tk.Tk):
     def save_data_and_continue(self):
         # Gather user data
         user_name = self.name_entry.get()
+        calorie_goal = self.calculate_calorie_goal()
         
         # Ensure that the name field is not empty
         if not user_name.strip():
@@ -107,7 +108,7 @@ class NutritionTracker(tk.Tk):
             file.write(f"{user_name}, {calorie_goal}\n")
         
         # Now proceed to the home screen
-        self.create_widgets_home_screen()
+        self.create_widgets_home_screen(user_name, calorie_goal)
 
 
     
@@ -153,17 +154,20 @@ class NutritionTracker(tk.Tk):
     #######################################################
     # Making Home Screen
     #######################################################
-    def create_widgets_home_screen(self):       # Creating widgets for application
+    def create_widgets_home_screen(self, user_name, calorie_goal):
         self.clear_screen()
-        home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))    # Food name section
-        home_screen_label.pack(pady=(10, 20))   # Add some padding
 
-        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)   # Button to add food
-        add_food_button.pack(pady=(10,20))      # Add some padding
+        greeting_label = tk.Label(self, text=f"Hello {user_name}, your calorie goal is {calorie_goal}", font=("Arial", 20))
+        greeting_label.pack(pady=(10, 20))
 
-        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress)   # Button to add food
-        show_progress.pack(pady=(10,20))      # Add some padding
+        home_screen_label = tk.Label(self, text="Home", font=("Arial", 20))
+        home_screen_label.pack(pady=(10, 20))
 
+        add_food_button = tk.Button(self, text="Add Food", command=self.create_widgets_add_food)
+        add_food_button.pack(pady=(10, 20))
+
+        show_progress_button = tk.Button(self, text="Show Progress", command=self.create_widgets_progress_graph)
+        show_progress_button.pack(pady=(10, 20))
 
     #######################################################
     # Making Add Food Screen
@@ -290,16 +294,18 @@ class NutritionTracker(tk.Tk):
     def login_user(self):
             # Get the username from the entry
         username = self.username_entry.get()
-
-        # Check if the account file exists
-        account_file_path = os.path.join("Accounts", f"{username}.txt")
-        if os.path.exists(account_file_path):
-            # File exists, log in successful, proceed to home screen
-            self.create_widgets_home_screen()
-        else:
-            # File does not exist, show an error or prompt to create an account
-            error_label = tk.Label(self, text="Account not found, please try again or register.", foreground="red")
-            error_label.pack()
+        accounts_folder = "Accounts"
+        filename = os.path.join(accounts_folder, f"{username}.txt")
+        
+        try:
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                # Assuming the last line contains the calorie goal
+                calorie_goal = lines[-1].strip().split(", ")[-1]
+                
+            self.create_widgets_home_screen(username, calorie_goal)
+        except FileNotFoundError:
+            messagebox.showerror("Login Failed", "Account does not exist. Please check your username or register.")
 
 
     #######################################################
