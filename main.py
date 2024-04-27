@@ -206,7 +206,8 @@ class NutritionTracker(tk.Tk):
         add_food_button.place(relx=0.35, rely=0.5, anchor="center")
 
         # Add button to go to progress page
-        show_progress = tk.Button(self, text="Show Progress", command=self.create_widgets_progress, font=("Arial", 14))
+        show_progress = tk.Button(self, text="Show Progress", command=lambda: self.create_widgets_progress(user_name, calorie_goal), font=("Arial", 14))
+
         show_progress.place(relx=0.65, rely=0.5, anchor="center")
 
         # Add logout button
@@ -275,13 +276,13 @@ class NutritionTracker(tk.Tk):
     #######################################################
     # Making Progress Screen
     #######################################################
-    def create_widgets_progress(self):
+    def create_widgets_progress(self, user_name, calorie_goal):
         # TODO: get the food data from add_food for the information below
 
         # "Your Progress!" text at the top middle
         self.clear_screen()
 
-        welcome_label = tk.Label(self, text="Your progress!", font=("Arial", 20))
+        welcome_label = tk.Label(self, text=f"{user_name}'s progress!", font=("Arial", 20))
         welcome_label.pack(pady=(10, 20))       # Add some padding
 
         frameChartsLT = tk.Frame(self)          # Corrected to use self
@@ -298,6 +299,7 @@ class NutritionTracker(tk.Tk):
         bar_ax.set_title('Average Calories this week: ' + str(calavg))
         bar_ax.set_xlabel('Day of the Week')
         bar_ax.set_ylabel('Days Calorie Intake')
+        bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
 
         chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
         chart1.get_tk_widget().pack(side=tk.LEFT)
@@ -313,8 +315,13 @@ class NutritionTracker(tk.Tk):
         chart1 = FigureCanvasTkAgg(fig, frameChartsLT)
         chart1.get_tk_widget().pack()
 
-        continue_button = tk.Button(self, text="Continue", command=self.open_main)
-        continue_button.pack()
+        # Add back button
+        back_button = tk.Button(self, text="Back", command=lambda: self.create_widgets_home_screen(user_name, calorie_goal), font=("Arial", 14))
+        back_button.place(relx=0.5, rely=0.85, anchor="center")
+
+        # Add logout button
+        logout_button = tk.Button(self, text="Logout", background = "red", command=self.create_widgets_intro, font=("Arial", 14))
+        logout_button.place(relx=1.0, anchor="ne")
 
     
 
