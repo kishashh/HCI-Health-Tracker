@@ -6,7 +6,6 @@ from tkinter import ttk
 import os
 from tkinter import messagebox
 from datetime import datetime, timedelta
-import datetime
 
 
 
@@ -305,7 +304,7 @@ class NutritionTracker(tk.Tk):
         self.clear_screen()
 
         # Get the current date and format it
-        current_date = datetime.datetime.now()
+        current_date = datetime.now()
         today = current_date.strftime("%A")
 
         # "{Name}'s Progress!" text at the top middle
@@ -319,38 +318,61 @@ class NutritionTracker(tk.Tk):
         # Bar Chart
         #######################################################
 
-        # Format DOW
-        if today == "Sunday":
-            barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-        elif today == "Monday":
-            barcat = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
-        elif today == "Tuesday":
-            barcat = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon']
-        elif today == "Wednesday":
-            barcat = ['Wed','Thu','Fri','Sat','Sun','Mon','Tue']
-        elif today == "Thursday":
-            barcat = ['Thu','Fri','Sat','Sun','Mon','Tue','Wed']
-        elif today == "Friday":
-            barcat = ['Fri','Sat','Sun','Mon','Tue','Wed','Thu']
-        elif today == "Saturday":
-            barcat = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri']
-        else: # THIS CANT EXIST AHHH
-            barcat = ['STOP', 'LYING', 'PYTHON']
+        seven_days_ago = ((current_date - timedelta(days=7)).date()).strftime("%m/%d/%Y")
 
-        barvalue = [1,2,3,4,5,6,7]
-        calavg = sum(barvalue)/7
+        # Open the user's file and check for matches with dates 7 days ago or earlier
+        with open(f'Accounts\{user_name}.txt', 'r') as file:
+            for line in file:
+                items = line.strip().split(',')
+                date_item = items[2].strip()
 
-        seven_days_ago = current_date - timedelta(days=7) 
-        bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
-        bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
-        bar_ax.bar(barcat, barvalue, color='skyblue')
-        bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg))
-        bar_ax.set_xlabel('Day of the Week')
-        bar_ax.set_ylabel('Calorie Intake')
-        bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
+                date1 = datetime.strptime(date_item, "%m/%d/%Y")
+                print(date1)
+                date2 = datetime.strptime(seven_days_ago, "%m/%d/%Y")
+                print(date2)
 
-        chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
-        chart1.get_tk_widget().pack(side=tk.LEFT)
+                difference = date1 - date2
+                seven_days = timedelta(days=0)
+
+                print(difference)
+
+                if difference <= seven_days:
+                    # Match found for a date 7 days ago or earlier, do something here
+                    # Format DOW
+                    if today == "Sunday":
+                        barcat = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                    elif today == "Monday":
+                        barcat = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+                    elif today == "Tuesday":
+                        barcat = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon']
+                    elif today == "Wednesday":
+                        barcat = ['Wed','Thu','Fri','Sat','Sun','Mon','Tue']
+                    elif today == "Thursday":
+                        barcat = ['Thu','Fri','Sat','Sun','Mon','Tue','Wed']
+                    elif today == "Friday":
+                        barcat = ['Fri','Sat','Sun','Mon','Tue','Wed','Thu']
+                    elif today == "Saturday":
+                        barcat = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri']
+                    else: # THIS CANT EXIST AHHH
+                        continue
+                    
+                    barvalue = [1,2,3,4,5,6,7]
+                    calavg = sum(barvalue)/7
+
+                    seven_days_ago = current_date - timedelta(days=7) 
+                    bar_fig = Figure(figsize=(5, 5), dpi=100, facecolor='gray')
+                    bar_ax = bar_fig.add_subplot(111)  # Adjust the subplot position for the bar chart
+                    bar_ax.bar(barcat, barvalue, color='skyblue')
+                    bar_ax.set_title('Average Calories Past 7 Days: ' + str(calavg))
+                    bar_ax.set_xlabel('Day of the Week')
+                    bar_ax.set_ylabel('Calorie Intake')
+                    bar_ax.axhline(y=calavg, color='blue', linestyle=':', linewidth=1.5) # dashed line for average 
+
+                    chart1 = FigureCanvasTkAgg(bar_fig, frameChartsLT)
+                    chart1.get_tk_widget().pack(side=tk.LEFT)
+                else:
+                    # No match found, move to the next line
+                    continue
 
         #######################################################
         # Pie Chart
@@ -370,7 +392,7 @@ class NutritionTracker(tk.Tk):
                 date_item = items[0].strip()
 
                 # Convert the date string to a datetime object
-                date_item = datetime.datetime.strptime(date_item, "%m/%d/%Y")
+                date_item = datetime.strptime(date_item, "%m/%d/%Y")
 
                 if date_item.date() == current_date.date():
                     # Match found for today's date, sum the values for each nutrient
