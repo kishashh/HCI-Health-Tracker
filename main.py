@@ -24,6 +24,10 @@ class NutritionTracker(tk.Tk):
         self.geometry("1050x500")
         self.configure(background="gray")
         self.create_widgets_intro()
+        self.food_entries = []  # Initialize the food_entries list
+        self.current_user = None  # Initialize a variable to hold the username persistently
+
+        
 
 
 
@@ -139,6 +143,8 @@ class NutritionTracker(tk.Tk):
         with open(filename2, 'w') as file:
             file.write("")
 
+        self.current_user = user_name
+
         # Now proceed to the home screen
         self.create_widgets_home_screen(user_name, calorie_goal)
 
@@ -246,8 +252,8 @@ class NutritionTracker(tk.Tk):
         self.food_listbox = tk.Listbox(self, width=50)                              # Creation of the listbox
         self.food_listbox.grid(row=3, column=0, columnspan=5, padx=5, pady=5)       # Placemtn of the listbox
 
-        self.add_button = tk.Button(self, text="Back to Home", command=self.back_to_home)  # Button to go back to home screen
-        self.add_button.grid(row=4, column=0, columnspan=5, pady=10)                # Placemtn of the listbox
+        # self.add_button = tk.Button(self, text="Back to Home", command=self.back_to_home)  # Button to go back to home screen
+        # self.add_button.grid(row=4, column=0, columnspan=5, pady=10)                # Placemtn of the listbox
 
     def add_food(self):                         # Def related to adding food button
         food = self.food_entry.get()            # Calls for food name input
@@ -259,9 +265,23 @@ class NutritionTracker(tk.Tk):
         if food and calories and protein and fat and carbs:                 # If all entries have input, append then add them to food_listbox
             self.food_entries.append((food, calories, protein, fat, carbs))
             self.food_listbox.insert(tk.END, f"{food} - Calories: {calories}, Protein: {protein}, Fat: {fat}, Carbs: {carbs}")
+            self.save_food_entry(calories, protein, carbs, fat)
             self.clear_entries()                # Empties boxes for new food item
         else:
-            tk.messagebox.showerror("Error", "Please fill in all fields.")  # Error if there is an empty field
+            messagebox.showerror("Error", "Please fill in all fields.")  # Error if there is an empty field
+
+    def save_food_entry(self, calories, protein, carbs, fat):
+        if self.current_user is None:
+            messagebox.showerror("Error", "No user logged in.")
+            return
+        print(self.current_user)
+        current_date = datetime.now().strftime("%m/%d/%Y")
+        results_folder = "Results"
+        os.makedirs(results_folder, exist_ok=True)
+        filename = os.path.join(results_folder, f"{self.current_user}.txt")
+
+        with open(filename, 'a') as file:
+            file.write(f"{current_date}, {calories}, {protein}, {carbs}, {fat}\n")
 
     def clear_entries(self):                    # Empties contents of all entries for new entries to be added
         self.food_entry.delete(0, tk.END)       # Clears food entry
@@ -349,6 +369,8 @@ class NutritionTracker(tk.Tk):
         username = self.username_entry.get()
         results_folder = "Accounts"
         filename = os.path.join(results_folder, f"{username}.txt")
+        self.current_user = self.username_entry.get()  # Store the username after a successful login
+
         
         try:
             with open(filename, 'r') as file:
