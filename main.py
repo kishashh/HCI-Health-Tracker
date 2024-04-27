@@ -5,6 +5,8 @@ import tkinter as tk
 from tkinter import ttk
 import os
 from tkinter import messagebox
+from datetime import datetime
+
 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -90,6 +92,8 @@ class NutritionTracker(tk.Tk):
         # Gather user data
         user_name = self.name_entry.get()
         calorie_goal = self.calculate_calorie_goal()
+        # Get the current date
+        current_date = datetime.now().strftime("%m/%d/%Y")
         
         # Ensure that the name field is not empty
         if not user_name.strip():
@@ -110,7 +114,7 @@ class NutritionTracker(tk.Tk):
         
         with open(filename, 'w') as file:
             # Write the name and calorie goal to the file in the specified format
-            file.write(f"{user_name}, {calorie_goal}\n")
+            file.write(f"{user_name}, {calorie_goal}, {current_date}\n")
         
         with open(filename2, 'w') as file:
             file.write("");
